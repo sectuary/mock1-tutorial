@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Test 1 - Malware Analysis for Beginners</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        h2 {
+            color: #2a5298;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #5a67d8;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .important {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        .step {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .highlight {
+            background: #ffeb3b;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .danger {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .tip {
+            background: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .exam-question {
+            background: #e7f3ff;
+            border: 2px solid #2a5298;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .answer {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #5a67d8;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .toc li {
+            padding: 8px 0;
+        }
+        
+        .toc a {
+            color: #2a5298;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .toc a:hover {
+            color: #667eea;
+        }
+        
+        kbd {
+            background: #333;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        
+        .diagram {
+            background: white;
+            padding: 20px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Mock Test 1: Malware Analysis</h1>
+            <p>A Beginner's Guide to Reverse Engineering with IDA</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Learn how to analyze mock_1.exe step by step</p>
+        </header>
+        
+        <div class="content">
+            <!-- Table of Contents -->
+            <div class="toc">
+                <h2 style="margin-top: 0;">📚 Table of Contents</h2>
+                <ul>
+                    <li><a href="#introduction">1. Introduction - What You'll Learn</a></li>
+                    <li><a href="#setup">2. Setup - Getting Started with IDA</a></li>
+                    <li><a href="#static-analysis">3. Static Analysis Basics</a></li>
+                    <li><a href="#ida-basics">4. IDA Pro Basics for Beginners</a></li>
+                    <li><a href="#question1a">5. Question 1a: How Key Files Are Used</a></li>
+                    <li><a href="#question1b">6. Question 1b: Key Selection Criterion</a></li>
+                    <li><a href="#question2a">7. Question 2a: Encryption Method</a></li>
+                    <li><a href="#question2b">8. Question 2b: Decryption Process</a></li>
+                    <li><a href="#question3">9. Question 3: Decrypt the Message</a></li>
+                    <li><a href="#question4">10. Question 4: Memory Forensics</a></li>
+                    <li><a href="#cheatsheet">11. Quick Reference Cheat Sheet</a></li>
+                </ul>
+            </div>
+
+            <!-- Introduction -->
+            <section id="introduction" class="section">
+                <h2>1. Introduction - What You'll Learn 🎯</h2>
+                <p>Welcome! This tutorial teaches you how to analyze malware like a professional. You'll learn:</p>
+                <ul style="margin-left: 40px; margin-top: 15px;">
+                    <li>✅ How to use IDA Pro (the industry-standard tool)</li>
+                    <li>✅ How to read assembly code and opcodes</li>
+                    <li>✅ How to identify encryption algorithms</li>
+                    <li>✅ How to decrypt encrypted files</li>
+                    <li>✅ How to answer exam questions with proper citations</li>
+                </ul>
+                
+                <div class="important">
+                    <strong>⏱️ Time Limit:</strong> 2 hours (exam simulation)<br>
+                    <strong>📁 Binary:</strong> mock_1.exe<br>
+                    <strong>🎯 Goal:</strong> Understand encryption and decrypt Settings.ini
+                </div>
+                
+                <h3>What is mock_1.exe?</h3>
+                <p>It's a Windows program that:</p>
+                <ol style="margin-left: 40px; margin-top: 10px;">
+                    <li>Reads a file called <code>input.txt</code></li>
+                    <li>Picks one of 7 key files (key0 to key6) based on the day of the week</li>
+                    <li>Encrypts the input using a simple cipher</li>
+                    <li>Writes the result to <code>output.txt</code></li>
+                </ol>
+            </section>
+
+            <!-- Setup -->
+            <section id="setup" class="section">
+                <h2>2. Setup - Getting Started with IDA 🛠️</h2>
+                
+                <h3>Files You Need:</h3>
+                <table>
+                    <tr>
+                        <th>File</th>
+                        <th>Description</th>
+                        <th>Size</th>
+                    </tr>
+                    <tr>
+                        <td>mock_1.exe</td>
+                        <td>The malware binary we're analyzing</td>
+                        <td>9.5 KB</td>
+                    </tr>
+                    <tr>
+                        <td>Settings.ini</td>
+                        <td>Encrypted message (our target!)</td>
+                        <td>20 bytes</td>
+                    </tr>
+                    <tr>
+                        <td>key0 - key7</td>
+                        <td>Key files (8 files total)</td>
+                        <td>Various</td>
+                    </tr>
+                    <tr>
+                        <td>mock_1.c</td>
+                        <td>Source code (for reference)</td>
+                        <td>2.4 KB</td>
+                    </tr>
+                </table>
+                
+                <h3>Step 1: Verify the Binary</h3>
+                <div class="code-block">md5sum mock_1.exe
+# Expected: b184c31f067377516da9f4d2228ee8c9</div>
+                
+                <h3>Step 2: Open in IDA Free</h3>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Launch IDA Free</strong> (or IDA Pro)
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>File → Open</strong> and select <code>mock_1.exe</code>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Accept all defaults</strong> in the dialog boxes
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>Wait for auto-analysis</strong> - Look for "Idle" in bottom left
+                </div>
+                
+                <div class="tip">
+                    <strong>💡 Pro Tip:</strong> IDA analyzes the binary automatically. Once you see "Idle", it's ready!
+                </div>
+            </section>
+
+            <!-- Static Analysis -->
+            <section id="static-analysis" class="section">
+                <h2>3. Static Analysis Basics 🔍</h2>
+                <p>Before opening IDA, let's gather basic information:</p>
+                
+                <h3>File Type Analysis</h3>
+                <div class="code-block">$ file mock_1.exe
+mock_1.exe: PE32 executable (console) Intel 80386</div>
+                <p><strong>What this means:</strong> It's a 32-bit Windows executable</p>
+                
+                <h3>String Analysis</h3>
+                <div class="code-block">$ strings mock_1.exe | grep key
+key0
+key1
+key2
+key3
+key4
+key5
+key6</div>
+                
+                <div class="important">
+                    <strong>⚠️ Important Finding:</strong> Only key0-key6 are mentioned! <span class="highlight">key7 is NOT used</span> by the program!
+                </div>
+                
+                <h3>Encrypted File Analysis</h3>
+                <div class="code-block">$ xxd -l 20 Settings.ini
+00000000: 196a 38fd 68be 2075 57dc 42cb 5168 5f72  .j8.h. uW.B.Qh_r
+00000010: 76f0 7526                                v.u&</div>
+                <p>This is our encrypted message - 20 bytes of gibberish!</p>
+                
+                <h3>Which Key Was Used?</h3>
+                <div class="code-block">$ stat Settings.ini | grep Modify
+Modify: 2016-02-05 08:07:20</div>
+                <p><strong>February 5, 2016</strong> was a <span class="highlight">Friday</span></p>
+                <p>Friday = Day 5 = <span class="success">key5 was used!</span></p>
+            </section>
+
+            <!-- IDA Basics -->
+            <section id="ida-basics" class="section">
+                <h2>4. IDA Pro Basics for Beginners 🎓</h2>
+                
+                <h3>Essential IDA Hotkeys</h3>
+                <table>
+                    <tr>
+                        <th>Key</th>
+                        <th>Function</th>
+                        <th>What It Shows</th>
+                    </tr>
+                    <tr>
+                        <td><kbd>Shift+F12</kbd></td>
+                        <td>Strings Window</td>
+                        <td>All text strings in the program</td>
+                    </tr>
+                    <tr>
+                        <td><kbd>Shift+F3</kbd></td>
+                        <td>Functions Window</td>
+                        <td>List of all functions</td>
+                    </tr>
+                    <tr>
+                        <td><kbd>X</kbd></td>
+                        <td>Cross-References</td>
+                        <td>Where is this item used?</td>
+                    </tr>
+                    <tr>
+                        <td><kbd>Space</kbd></td>
+                        <td>Graph/Text View</td>
+                        <td>Toggle between views</td>
+                    </tr>
+                    <tr>
+                        <td><kbd>F5</kbd></td>
+                        <td>Decompile</td>
+                        <td>Convert to C-like code</td>
+                    </tr>
+                    <tr>
+                        <td><kbd>G</kbd></td>
+                        <td>Jump to Address</td>
+                        <td>Go to specific location</td>
+                    </tr>
+                </table>
+                
+                <h3>Understanding Assembly Code</h3>
+                <div class="diagram">Address   Opcode      Instruction       Comment
+--------  ----------  ----------------  -----------------
+00401234  mov eax, 5  Move 5 into EAX   EAX = 5
+00401239  add eax, 3  Add 3 to EAX      EAX = 5 + 3 = 8
+0040123E  call func   Call a function   Jump to func</div>
+                
+                <div class="tip">
+                    <strong>💡 Reading Assembly:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>Address:</strong> Where the instruction is located in memory</li>
+                        <li><strong>Opcode:</strong> The actual machine code (in hex)</li>
+                        <li><strong>Instruction:</strong> Human-readable assembly command</li>
+                        <li><strong>Comment:</strong> IDA's notes (or your own)</li>
+                    </ul>
+                </div>
+                
+                <h3>Common Instructions You'll See</h3>
+                <table>
+                    <tr>
+                        <th>Instruction</th>
+                        <th>Meaning</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><code>mov</code></td>
+                        <td>Move/Copy data</td>
+                        <td>mov eax, 5 → EAX = 5</td>
+                    </tr>
+                    <tr>
+                        <td><code>add</code></td>
+                        <td>Addition</td>
+                        <td>add eax, ebx → EAX = EAX + EBX</td>
+                    </tr>
+                    <tr>
+                        <td><code>sub</code></td>
+                        <td>Subtraction</td>
+                        <td>sub eax, 10 → EAX = EAX - 10</td>
+                    </tr>
+                    <tr>
+                        <td><code>cmp</code></td>
+                        <td>Compare</td>
+                        <td>cmp eax, 6 → Compare EAX with 6</td>
+                    </tr>
+                    <tr>
+                        <td><code>call</code></td>
+                        <td>Call function</td>
+                        <td>call _time → Call time()</td>
+                    </tr>
+                    <tr>
+                        <td><code>jmp</code></td>
+                        <td>Jump</td>
+                        <td>jmp loc_401234 → Go to address</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Question 1a -->
+            <section id="question1a" class="section">
+                <h2>5. Question 1a: How Key Files Are Used 📂</h2>
+                
+                <div class="exam-question">
+                    <strong>📝 EXAM QUESTION:</strong><br>
+                    State how mock_1.exe uses the key files (key0 … key7). Cite relevant opcodes to support your claims.
+                </div>
+                
+                <h3>Finding the Answer in IDA - Step by Step</h3>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Open Strings Window</strong><br>
+                    Press <kbd>Shift+F12</kbd> to see all strings
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Find Key Strings</strong><br>
+                    Look for "key0", "key1", etc. in the list
+                </div>
+                
+                <div class="code-block">Address      String
+---------    ------
+0x004040D0   "key0"
+0x004040D5   "key1"
+0x004040DA   "key2"
+0x004040DF   "key3"
+0x004040E4   "key4"
+0x004040E9   "key5"
+0x004040EE   "key6"</div>
+                
+                <div class="important">
+                    <strong>❗ Critical Finding:</strong> Only 7 strings! key7 is NOT present in the code!
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Find Where "key0" is Used</strong><br>
+                    Double-click on "key0" → Press <kbd>X</kbd> for cross-references
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>Look for stat() Function</strong><br>
+                    You'll find code that calls <code>_stat</code> to get file size
+                </div>
+                
+                <div class="code-block">; Check file size
+mov    [esp], offset aKey0    ; "key0"
+call   sub_4014B8             ; fsize() function
+
+; Inside fsize():
+004014CB    call   _stat      ; ← Get file info!</div>
+                
+                <div class="important">
+                    <strong>🎯 Opcode to Cite:</strong> <code>call _stat</code> at address <code>0x004014CB</code>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <strong>Find the SWITCH Statement</strong><br>
+                    Keep scrolling to find time-related functions
+                </div>
+                
+                <div class="code-block">004015F1    call   _time          ; Get current time
+004015FD    call   _localtime     ; Convert to local time
+00401602    mov    eax, [eax+18h] ; Access tm_wday!
+0040160B    cmp    eax, 6         ; Compare with 6</div>
+                
+                <h3>Understanding the SWITCH Statement</h3>
+                <div class="diagram">         ┌─────────────────┐
+         │  Get Day (0-6)  │
+         └────────┬────────┘
+                  │
+         ┌────────▼────────┐
+         │  Compare ≤ 6?   │
+         └────────┬────────┘
+                  │
+    ┌─────────────┼─────────────┐
+    │             │             │
+  Day 0         Day 1         Day 2  ...  Day 6
+    │             │             │           │
+  key0          key1          key2   ...  key6</div>
+                
+                <div class="answer">
+                    <h3>✅ ANSWER TO QUESTION 1a:</h3>
+                    <p>mock_1.exe uses key files as follows:</p>
+                    <ol style="margin-left: 40px; margin-top: 10px;">
+                        <li><strong>File Size Checking:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li>All key files (key0-key6) are accessed via <code>stat()</code></li>
+                                <li><strong>Opcode:</strong> <code>call _stat</code> at <code>0x004014CB</code></li>
+                                <li>Purpose: Get file size for each key file</li>
+                            </ul>
+                        </li>
+                        <li><strong>Key Selection:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li>Only key0-key6 are referenced (7 files)</li>
+                                <li>key7 is never used (no string reference)</li>
+                                <li>String addresses: 0x004040D0 through 0x004040EE</li>
+                            </ul>
+                        </li>
+                        <li><strong>SWITCH-CASE Structure:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li>Uses jump table for efficient selection</li>
+                                <li><strong>Opcode:</strong> <code>cmp eax, 6</code> at <code>0x0040160B</code></li>
+                                <li>Handles cases 0-6 only</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Question 1b -->
+            <section id="question1b" class="section">
+                <h2>6. Question 1b: Key Selection Criterion ⏰</h2>
+                
+                <div class="exam-question">
+                    <strong>📝 EXAM QUESTION:</strong><br>
+                    What is the key selection criterion of mock_1.exe? Cite relevant opcodes to support your claim.
+                </div>
+                
+                <h3>Analyzing the Time Functions</h3>
+                
+                <div class="code-block">004015F1    call   _time          ; time_t time(time_t *timer)
+004015FD    call   _localtime     ; struct tm *localtime(...)
+00401602    mov    eax, [eax+18h] ; ← KEY LINE!</div>
+                
+                <h3>Understanding struct tm</h3>
+                <p>The <code>localtime()</code> function returns a pointer to a <code>struct tm</code>:</p>
+                
+                <table>
+                    <tr>
+                        <th>Field</th>
+                        <th>Offset</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>tm_sec</td>
+                        <td>+0x00</td>
+                        <td>Seconds (0-59)</td>
+                    </tr>
+                    <tr>
+                        <td>tm_min</td>
+                        <td>+0x04</td>
+                        <td>Minutes (0-59)</td>
+                    </tr>
+                    <tr>
+                        <td>tm_hour</td>
+                        <td>+0x08</td>
+                        <td>Hours (0-23)</td>
+                    </tr>
+                    <tr>
+                        <td>tm_mday</td>
+                        <td>+0x0C</td>
+                        <td>Day of month (1-31)</td>
+                    </tr>
+                    <tr>
+                        <td>tm_mon</td>
+                        <td>+0x10</td>
+                        <td>Month (0-11)</td>
+                    </tr>
+                    <tr>
+                        <td>tm_year</td>
+                        <td>+0x14</td>
+                        <td>Years since 1900</td>
+                    </tr>
+                    <tr class="highlight" style="background: #ffeb3b;">
+                        <td><strong>tm_wday</strong></td>
+                        <td><strong>+0x18</strong></td>
+                        <td><strong>Day of week (0-6)</strong></td>
+                    </tr>
+                </table>
+                
+                <div class="important">
+                    <strong>🎯 The Critical Line:</strong><br>
+                    <code>mov eax, [eax+18h]</code><br><br>
+                    Offset 0x18 (24 in decimal) = <strong>tm_wday</strong> field!<br>
+                    This is the DAY OF THE WEEK!
+                </div>
+                
+                <h3>Day of Week Values</h3>
+                <table>
+                    <tr>
+                        <th>tm_wday Value</th>
+                        <th>Day Name</th>
+                        <th>Key Used</th>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>Sunday</td>
+                        <td>key0</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Monday</td>
+                        <td>key1</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Tuesday</td>
+                        <td>key2</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Wednesday</td>
+                        <td>key3</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Thursday</td>
+                        <td>key4</td>
+                    </tr>
+                    <tr style="background: #d4edda;">
+                        <td><strong>5</strong></td>
+                        <td><strong>Friday</strong></td>
+                        <td><strong>key5</strong> ← Settings.ini!</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Saturday</td>
+                        <td>key6</td>
+                    </tr>
+                </table>
+                
+                <div class="answer">
+                    <h3>✅ ANSWER TO QUESTION 1b:</h3>
+                    <p>The key selection criterion is <strong>day of the week</strong> (tm_wday).</p>
+                    <br>
+                    <p><strong>Mechanism:</strong></p>
+                    <ol style="margin-left: 40px; margin-top: 10px;">
+                        <li><strong>Get System Time:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li><strong>Opcode:</strong> <code>call _time</code> at <code>0x004015F1</code></li>
+                            </ul>
+                        </li>
+                        <li><strong>Convert to Local Time:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li><strong>Opcode:</strong> <code>call _localtime</code> at <code>0x004015FD</code></li>
+                                <li>Returns pointer to struct tm</li>
+                            </ul>
+                        </li>
+                        <li><strong>Extract Day of Week:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li><strong>Opcode:</strong> <code>mov eax, [eax+18h]</code> at <code>0x00401602</code></li>
+                                <li>Accesses tm_wday field at offset 0x18</li>
+                                <li>Value range: 0-6 (0=Sunday, 6=Saturday)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Validate Range:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li><strong>Opcode:</strong> <code>cmp eax, 6</code> at <code>0x0040160B</code></li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Question 2a -->
+            <section id="question2a" class="section">
+                <h2>7. Question 2a: Encryption Method 🔐</h2>
+                
+                <div class="exam-question">
+                    <strong>📝 EXAM QUESTION:</strong><br>
+                    Explain how the file input.txt is encrypted. Cite relevant opcodes to support your claims.
+                </div>
+                
+                <h3>Finding the Encrypt Function</h3>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Search for "Encrypting" String</strong><br>
+                    Press <kbd>Shift+F12</kbd> and search for "Encrypting"
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Find Cross-References</strong><br>
+                    Double-click → Press <kbd>X</kbd> → Jump to the function
+                </div>
+                
+                <h3>The Encryption Loop</h3>
+                <div class="code-block">; Read byte from input.txt
+00401476    mov    eax, [ebp+var_24]    ; Load file pointer
+            mov    [esp], eax
+            call   ds:fgetc              ; ← Read input byte
+            mov    [ebp+var_18], eax    ; Store as 'x'
+
+; Check for EOF
+            cmp    DWORD PTR [ebp+var_18], -1
+            je     loop_end
+
+; Read byte from key file
+00401430    mov    eax, [ebp+var_20]
+            mov    [esp], eax
+            call   ds:fgetc              ; ← Read key byte
+            mov    [ebp+var_14], eax    ; Store as 'y'
+
+; Check key EOF
+            cmp    DWORD PTR [ebp+var_14], -1
+            jne    no_rewind
+
+; REWIND if key reached end
+00401444    mov    eax, [ebp+var_20]
+            mov    [esp], eax
+            call   ds:rewind             ; ← Reset key to start!
+            
+            ; Read first byte again
+            call   ds:fgetc
+            mov    [ebp+var_14], eax
+
+no_rewind:
+; THE ENCRYPTION OPERATION
+0040145F    mov    edx, [ebp+var_18]    ; Load input byte
+            mov    eax, [ebp+var_14]    ; Load key byte
+            add    edx, eax              ; ← ADD OPERATION!
+
+; Write encrypted byte
+0040146B    mov    eax, [ebp+var_1C]
+            mov    [esp+4], eax
+            mov    [esp], edx
+            call   fputc                 ; ← Write output</div>
+                
+                <div class="important">
+                    <strong>🔑 THE ENCRYPTION SECRET:</strong><br>
+                    <code>add edx, eax</code> at <code>0x0040145F</code><br><br>
+                    This is an <strong>ADD cipher</strong>, NOT XOR!<br>
+                    Formula: <code>encrypted = (input + key) mod 256</code>
+                </div>
+                
+                <h3>Circular Key Mechanism</h3>
+                <div class="diagram">Input:  H  e  l  l  o  W  o  r  l  d  !
+Key:    A  B  C  [EOF - REWIND]
+        ↓  ↓  ↓   ↓
+Key:    A  B  C   A  B  C  A  B  C  A  B
+        
+Result: Input[i] + Key[i % key_length]</div>
+                
+                <div class="tip">
+                    <strong>💡 Why Rewind?</strong><br>
+                    If the input file is longer than the key file, the key repeats from the beginning. This is called a "circular" or "repeating" key.
+                </div>
+                
+                <div class="answer">
+                    <h3>✅ ANSWER TO QUESTION 2a:</h3>
+                    <p>The file input.txt is encrypted using a <strong>simple ADD cipher</strong> with a circular key.</p>
+                    <br>
+                    <p><strong>Process:</strong></p>
+                    <ol style="margin-left: 40px; margin-top: 10px;">
+                        <li><strong>Byte-by-Byte Reading:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li>Read input byte: <code>call ds:fgetc</code> at <code>0x00401476</code></li>
+                                <li>Read key byte: <code>call ds:fgetc</code> at <code>0x00401430</code></li>
+                            </ul>
+                        </li>
+                        <li><strong>Circular Key:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li>If key reaches EOF: <code>call ds:rewind</code> at <code>0x00401444</code></li>
+                                <li>Key repeats from beginning</li>
+                            </ul>
+                        </li>
+                        <li><strong>ADD Encryption:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li><strong>Opcode:</strong> <code>add edx, eax</code> at <code>0x0040145F</code></li>
+                                <li>Formula: encrypted = (input + key) mod 256</li>
+                                <li>Byte arithmetic wraps at 256</li>
+                            </ul>
+                        </li>
+                        <li><strong>Write Output:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li><code>call fputc</code> at <code>0x0040146B</code></li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Question 2b -->
+            <section id="question2b" class="section">
+                <h2>8. Question 2b: Decryption Process 🔓</h2>
+                
+                <div class="exam-question">
+                    <strong>📝 EXAM QUESTION:</strong><br>
+                    Given that settings.ini is in ASCII text and encoded by mock_1.exe, explain how you could decrypt the settings.ini. Describe the decryption process using the first byte.
+                </div>
+                
+                <h3>Understanding the Inverse Operation</h3>
+                <p>If encryption is ADDITION, then decryption is SUBTRACTION:</p>
+                
+                <div class="diagram">ENCRYPTION:     plaintext + key = ciphertext
+DECRYPTION:     ciphertext - key = plaintext</div>
+                
+                <h3>Step 1: Identify the Correct Key</h3>
+                <div class="code-block">$ stat Settings.ini | grep Modify
+Modify: 2016-02-05 08:07:20
+
+February 5, 2016 = Friday = Day 5 = key5</div>
+                
+                <h3>Step 2: Get First Byte Values</h3>
+                <div class="code-block">$ xxd -l 1 Settings.ini
+00000000: 19                                       .
+
+First byte of Settings.ini: 0x19 (25 decimal)
+
+$ xxd -l 1 key5
+00000000: c5                                       .
+
+First byte of key5: 0xC5 (197 decimal)</div>
+                
+                <h3>Step 3: Perform Decryption</h3>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Subtract:</strong> 25 - 197 = -172
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Handle Negative (Modulo 256):</strong> -172 + 256 = 84
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Convert to ASCII:</strong> 84 = 'T'
+                </div>
+                
+                <h3>Why Modulo 256?</h3>
+                <p>During encryption, the ADD operation "wraps around" at 256:</p>
+                
+                <div class="diagram">Original: 'T' = 84
+Key byte: 197
+Add:      84 + 197 = 281
+Overflow: 281 - 256 = 25 ← This is stored
+
+Decryption reverses this:
+Encrypted: 25
+Key byte:  197
+Subtract:  25 - 197 = -172
+Fix:       -172 + 256 = 84 = 'T' ✓</div>
+                
+                <div class="answer">
+                    <h3>✅ ANSWER TO QUESTION 2b:</h3>
+                    <p><strong>Decryption Formula:</strong> plaintext = (encrypted - key) mod 256</p>
+                    <br>
+                    <p><strong>First Byte Decryption:</strong></p>
+                    <ol style="margin-left: 40px; margin-top: 10px;">
+                        <li><strong>Identify Key File:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li>Settings.ini date: Feb 5, 2016 (Friday)</li>
+                                <li>Use key5</li>
+                            </ul>
+                        </li>
+                        <li><strong>Get Values:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li>Encrypted[0] = 0x19 (25)</li>
+                                <li>Key5[0] = 0xC5 (197)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Calculate:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li>25 - 197 = -172</li>
+                                <li>-172 mod 256 = -172 + 256 = 84</li>
+                                <li>84 = 'T' in ASCII</li>
+                            </ul>
+                        </li>
+                        <li><strong>Verification:</strong>
+                            <ul style="margin-left: 20px;">
+                                <li>Encrypt: 84 + 197 = 281</li>
+                                <li>281 mod 256 = 25 ✓</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Question 3 -->
+            <section id="question3" class="section">
+                <h2>9. Question 3: Decrypt the Message 💬</h2>
+                
+                <div class="exam-question">
+                    <strong>📝 EXAM QUESTION:</strong><br>
+                    Given that settings.ini is in ASCII text and encoded by mock_1.exe, write down the decrypted message from settings.ini.
+                </div>
+                
+                <h3>Python Decryption Script</h3>
+                <div class="code-block">#!/usr/bin/env python3
+
+# Read encrypted file
+with open('Settings.ini', 'rb') as f:
+    encrypted = f.read()
+
+# Read key5 (Friday)
+with open('key5', 'rb') as f:
+    key = f.read()
+
+# Decrypt each byte
+decrypted = bytes((encrypted[i] - key[i]) % 256 
+                  for i in range(len(encrypted)))
+
+# Print result
+print(decrypted.decode('ascii'))</div>
+                
+                <h3>Byte-by-Byte Decryption Table</h3>
+                <table>
+                    <tr>
+                        <th>Byte #</th>
+                        <th>Encrypted</th>
+                        <th>Key5</th>
+                        <th>Decrypted</th>
+                        <th>ASCII</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>0x19 (25)</td>
+                        <td>0xC5 (197)</td>
+                        <td>84</td>
+                        <td><strong>T</strong></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>0x6A (106)</td>
+                        <td>0x22 (34)</td>
+                        <td>72</td>
+                        <td><strong>H</strong></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>0x38 (56)</td>
+                        <td>0xCF (207)</td>
+                        <td>105</td>
+                        <td><strong>i</strong></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>0xFD (253)</td>
+                        <td>0x8A (138)</td>
+                        <td>115</td>
+                        <td><strong>s</strong></td>
+                    </tr>
+                    <tr>
+                        <td>...</td>
+                        <td>...</td>
+                        <td>...</td>
+                        <td>...</td>
+                        <td>...</td>
+                    </tr>
+                </table>
+                
+                <div class="answer">
+                    <h3>✅ ANSWER TO QUESTION 3:</h3>
+                    <div style="background: #fff; padding: 20px; border: 3px solid #28a745; border-radius: 8px; text-align: center; font-size: 1.5em; margin: 20px 0;">
+                        <strong>THis is a mock test</strong>
+                    </div>
+                    <p style="text-align: center; margin-top: 10px;">(Note: Message includes a newline character at the end)</p>
+                </div>
+            </section>
+
+            <!-- Question 4 -->
+            <section id="question4" class="section">
+                <h2>10. Question 4: Memory Forensics 🧠</h2>
+                
+                <div class="exam-question">
+                    <strong>📝 EXAM QUESTION:</strong><br>
+                    Describe 3 artifacts that can be found using Memory Forensics.
+                </div>
+                
+                <div class="answer">
+                    <h3>✅ ANSWER TO QUESTION 4:</h3>
+                    
+                    <h4>1. Process and Network Data Structures</h4>
+                    <p>Data structures that track running processes, network connections, and resources:</p>
+                    <ul style="margin-left: 40px; margin-top: 10px;">
+                        <li>Process list (PID, parent PID, command line)</li>
+                        <li>Active network connections (IP, ports)</li>
+                        <li>Open file handles</li>
+                        <li>Loaded DLL modules</li>
+                    </ul>
+                    <p><strong>Forensic Value:</strong> Identify malicious processes, hidden processes, and network activity</p>
+                    <br>
+                    
+                    <h4>2. Passwords and Encryption Keys</h4>
+                    <p>Credentials and cryptographic keys in clear text:</p>
+                    <ul style="margin-left: 40px; margin-top: 10px;">
+                        <li>User passwords (encrypted on disk, plain in RAM)</li>
+                        <li>Encryption keys for real-time operations</li>
+                        <li>Session tokens and authentication data</li>
+                        <li>NTLM hashes, Kerberos tickets</li>
+                    </ul>
+                    <p><strong>Why in Memory:</strong> Software needs plaintext credentials for authentication and real-time encryption</p>
+                    <br>
+                    
+                    <h4>3. Unpacked/Decrypted Executables</h4>
+                    <p>Malware that's packed or encrypted on disk must be decrypted in memory:</p>
+                    <ul style="margin-left: 40px; margin-top: 10px;">
+                        <li>Packed malware (UPX, Themida, custom packers)</li>
+                        <li>Encrypted code sections</li>
+                        <li>Injected code in other processes</li>
+                        <li>Shellcode and position-independent code</li>
+                    </ul>
+                    <p><strong>Why in Memory:</strong> CPU can only execute decoded instructions; packers are anti-analysis, not operational</p>
+                </div>
+            </section>
+
+            <!-- Cheat Sheet -->
+            <section id="cheatsheet" class="section">
+                <h2>11. Quick Reference Cheat Sheet 📋</h2>
+                
+                <h3>IDA Hotkeys</h3>
+                <table>
+                    <tr>
+                        <th>Key</th>
+                        <th>Function</th>
+                    </tr>
+                    <tr><td><kbd>Shift+F12</kbd></td><td>Strings window</td></tr>
+                    <tr><td><kbd>Shift+F3</kbd></td><td>Functions window</td></tr>
+                    <tr><td><kbd>X</kbd></td><td>Cross-references</td></tr>
+                    <tr><td><kbd>Space</kbd></td><td>Toggle graph/text view</td></tr>
+                    <tr><td><kbd>F5</kbd></td><td>Decompile to C</td></tr>
+                    <tr><td><kbd>G</kbd></td><td>Jump to address</td></tr>
+                    <tr><td><kbd>N</kbd></td><td>Rename variable</td></tr>
+                    <tr><td><kbd>;</kbd></td><td>Add comment</td></tr>
+                </table>
+                
+                <h3>Key Findings Summary</h3>
+                <table>
+                    <tr>
+                        <th>Item</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr><td>Binary</td><td>mock_1.exe</td></tr>
+                    <tr><td>MD5</td><td>b184c31f067377516da9f4d2228ee8c9</td></tr>
+                    <tr><td>Keys Used</td><td>key0-key6 only (key7 NOT used)</td></tr>
+                    <tr><td>Selection Method</td><td>Day of week (tm_wday)</td></tr>
+                    <tr><td>Settings.ini Key</td><td>key5 (Friday, Feb 5, 2016)</td></tr>
+                    <tr><td>Encryption</td><td>ADD cipher: (input + key) mod 256</td></tr>
+                    <tr><td>Decryption</td><td>SUB cipher: (encrypted - key) mod 256</td></tr>
+                    <tr><td>Decrypted Message</td><td>THis is a mock test</td></tr>
+                </table>
+                
+                <h3>Critical Opcodes to Remember</h3>
+                <table>
+                    <tr>
+                        <th>Address</th>
+                        <th>Opcode</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr><td>0x004014CB</td><td>call _stat</td><td>Get file size</td></tr>
+                    <tr><td>0x004015F1</td><td>call _time</td><td>Get system time</td></tr>
+                    <tr><td>0x004015FD</td><td>call _localtime</td><td>Convert time</td></tr>
+                    <tr><td>0x00401602</td><td>mov eax, [eax+18h]</td><td>Get tm_wday</td></tr>
+                    <tr><td>0x0040160B</td><td>cmp eax, 6</td><td>Validate day 0-6</td></tr>
+                    <tr><td>0x00401476</td><td>call ds:fgetc</td><td>Read input byte</td></tr>
+                    <tr><td>0x00401430</td><td>call ds:fgetc</td><td>Read key byte</td></tr>
+                    <tr><td>0x00401444</td><td>call ds:rewind</td><td>Circular key</td></tr>
+                    <tr><td>0x0040145F</td><td>add edx, eax</td><td>ADD encryption</td></tr>
+                    <tr><td>0x0040146B</td><td>call fputc</td><td>Write output</td></tr>
+                </table>
+                
+                <h3>struct tm Offsets</h3>
+                <div class="code-block">+0x00  tm_sec    Seconds (0-59)
++0x04  tm_min    Minutes (0-59)
++0x08  tm_hour   Hours (0-23)
++0x0C  tm_mday   Day of month (1-31)
++0x10  tm_mon    Month (0-11)
++0x14  tm_year   Years since 1900
++0x18  tm_wday   Day of week (0-6) ← THIS ONE!
++0x1C  tm_yday   Day of year (0-365)
++0x20  tm_isdst  DST flag</div>
+                
+                <h3>Exam Tips</h3>
+                <div class="tip">
+                    <ul style="margin-left: 20px;">
+                        <li>✅ Always cite opcodes with addresses</li>
+                        <li>✅ Show your calculations step-by-step</li>
+                        <li>✅ Verify answers make sense (printable ASCII)</li>
+                        <li>✅ Check file dates to identify key</li>
+                        <li>✅ Remember: ADD cipher, NOT XOR</li>
+                        <li>✅ Handle negative numbers with modulo 256</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Footer Navigation -->
+            <div class="nav-buttons">
+                <a href="#" class="btn" onclick="window.scrollTo(0,0); return false;">↑ Back to Top</a>
+                <a href="https://github.com" class="btn">📂 View on GitHub</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer style="text-align: center; padding: 20px; color: white;">
+        <p>Created for ST2617 Mock Reverse Engineering Exam Preparation</p>
+        <p style="font-size: 0.9em; margin-top: 10px;">Good luck with your exam! 🍀</p>
+    </footer>
+</body>
+</html>
