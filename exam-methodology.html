@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Methodology - How to Approach RE Questions</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .content { padding: 40px; }
+        h2 {
+            color: #2a5298;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        h3 { color: #5a67d8; margin-top: 20px; margin-bottom: 10px; }
+        .methodology {
+            background: #f8f9fa;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+        }
+        .step-box {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .question-type {
+            background: #e7f3ff;
+            border: 2px solid #2a5298;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .test-method {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .tip {
+            background: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        tr:nth-child(even) { background: #f8f9fa; }
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .flowchart {
+            background: white;
+            padding: 20px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        kbd {
+            background: #333;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+            color: #667eea;
+        }
+        .highlight {
+            background: #ffeb3b;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Exam Methodology Guide</h1>
+            <p>How to Approach Reverse Engineering Questions Systematically</p>
+        </header>
+        
+        <div class="content">
+            <h2>🤔 The Core Problem: "How Do I Know What to Do?"</h2>
+            
+            <div class="warning">
+                <strong>Common Student Struggle:</strong><br>
+                "I open IDA and see tons of assembly code... where do I even start?"<br>
+                "How do I know if I'm looking at the right function?"<br>
+                "How can I verify my answer is correct?"
+            </div>
+            
+            <p style="margin-top: 20px;">This guide teaches you a <strong>systematic methodology</strong> for tackling ANY reverse engineering exam question.</p>
+
+            <!-- Question Analysis Framework -->
+            <h2>📋 Step 1: Question Analysis Framework</h2>
+            
+            <div class="methodology">
+                <h3>Before Opening IDA, Read the Question 3 Times:</h3>
+                
+                <div class="step-box">
+                    <span class="step-number">1</span>
+                    <strong>First Read - Identify the Question Type</strong>
+                    <p style="margin-top: 10px;">What is being asked?</p>
+                    <ul style="margin-left: 40px; margin-top: 10px;">
+                        <li><strong>"How does it use..."</strong> → Find usage pattern + data flow</li>
+                        <li><strong>"What is the criterion..."</strong> → Find decision logic</li>
+                        <li><strong>"Explain how..."</strong> → Find algorithm/process</li>
+                        <li><strong>"Decrypt/decode..."</strong> → Find algorithm + apply inverse</li>
+                        <li><strong>"Describe artifacts..."</strong> → Conceptual knowledge</li>
+                    </ul>
+                </div>
+                
+                <div class="step-box">
+                    <span class="step-number">2</span>
+                    <strong>Second Read - Extract Keywords</strong>
+                    <p style="margin-top: 10px;">Circle/highlight important terms:</p>
+                    <ul style="margin-left: 40px; margin-top: 10px;">
+                        <li><strong>File names:</strong> "key0", "Settings.ini", "input.txt"</li>
+                        <li><strong>Technical terms:</strong> "encrypted", "selection", "criterion"</li>
+                        <li><strong>Requirements:</strong> "cite opcodes", "support your claims"</li>
+                    </ul>
+                </div>
+                
+                <div class="step-box">
+                    <span class="step-number">3</span>
+                    <strong>Third Read - Plan Your Evidence</strong>
+                    <p style="margin-top: 10px;">What evidence do you need?</p>
+                    <ul style="margin-left: 40px; margin-top: 10px;">
+                        <li>Specific opcodes with addresses?</li>
+                        <li>Function names?</li>
+                        <li>String references?</li>
+                        <li>Control flow patterns?</li>
+                        <li>Calculations/examples?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Question Type Patterns -->
+            <h2>🔍 Step 2: Recognize Question Type Patterns</h2>
+            
+            <div class="question-type">
+                <h3>Type 1: "How does the program use X?"</h3>
+                <p><strong>Example:</strong> "How does mock_1.exe use the key files (key0-key7)?"</p>
+                
+                <h4>What to Look For:</h4>
+                <table>
+                    <tr>
+                        <th>Evidence Needed</th>
+                        <th>Where to Find It</th>
+                        <th>IDA Action</th>
+                    </tr>
+                    <tr>
+                        <td>String references</td>
+                        <td>Strings window</td>
+                        <td><kbd>Shift+F12</kbd> → Search "key"</td>
+                    </tr>
+                    <tr>
+                        <td>Where strings are used</td>
+                        <td>Cross-references</td>
+                        <td>Double-click string → <kbd>X</kbd></td>
+                    </tr>
+                    <tr>
+                        <td>File operations</td>
+                        <td>Function calls</td>
+                        <td>Look for: fopen, fclose, stat, fsize</td>
+                    </tr>
+                    <tr>
+                        <td>Selection logic</td>
+                        <td>Control flow</td>
+                        <td>Look for: switch, if-else, cmp</td>
+                    </tr>
+                </table>
+                
+                <h4>Testing Strategy:</h4>
+                <div class="test-method">
+                    <strong>✅ How to Verify:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Count string references (should match # of keys used)</li>
+                        <li>Check if ALL keys are referenced or only some</li>
+                        <li>Trace from string → function → usage</li>
+                        <li>Look for patterns (loop? switch? array access?)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="question-type">
+                <h3>Type 2: "What is the criterion/condition?"</h3>
+                <p><strong>Example:</strong> "What is the key selection criterion?"</p>
+                
+                <h4>What to Look For:</h4>
+                <table>
+                    <tr>
+                        <th>Evidence Needed</th>
+                        <th>Where to Find It</th>
+                        <th>IDA Action</th>
+                    </tr>
+                    <tr>
+                        <td>Input source</td>
+                        <td>Function calls before selection</td>
+                        <td>Look for: time, rand, input, argv</td>
+                    </tr>
+                    <tr>
+                        <td>Comparison values</td>
+                        <td>CMP instructions</td>
+                        <td>Find: cmp eax, VALUE</td>
+                    </tr>
+                    <tr>
+                        <td>Data structure access</td>
+                        <td>Memory offsets</td>
+                        <td>Look for: [eax+0xNN]</td>
+                    </tr>
+                    <tr>
+                        <td>Range of values</td>
+                        <td>Jump conditions</td>
+                        <td>Find: ja, jb, jl, jg (above/below/less/greater)</td>
+                    </tr>
+                </table>
+                
+                <h4>Testing Strategy:</h4>
+                <div class="test-method">
+                    <strong>✅ How to Verify:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>Check ranges:</strong> If cmp eax, 6 → values are 0-6</li>
+                        <li><strong>Lookup structures:</strong> Offset 0x18 → check struct definition</li>
+                        <li><strong>Test with calculator:</strong> Does the range match # of cases?</li>
+                        <li><strong>Cross-reference docs:</strong> What does tm_wday mean?</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="question-type">
+                <h3>Type 3: "Explain the algorithm/process"</h3>
+                <p><strong>Example:</strong> "Explain how input.txt is encrypted"</p>
+                
+                <h4>What to Look For:</h4>
+                <table>
+                    <tr>
+                        <th>Evidence Needed</th>
+                        <th>Where to Find It</th>
+                        <th>IDA Action</th>
+                    </tr>
+                    <tr>
+                        <td>Main loop</td>
+                        <td>Function with "encrypt" string</td>
+                        <td><kbd>Shift+F12</kbd> → "Encrypting" → <kbd>X</kbd></td>
+                    </tr>
+                    <tr>
+                        <td>Input reading</td>
+                        <td>File I/O calls</td>
+                        <td>Look for: fgetc, fread, getc</td>
+                    </tr>
+                    <tr>
+                        <td>Encryption operation</td>
+                        <td>Math operations in loop</td>
+                        <td>Look for: add, xor, sub, rol, ror</td>
+                    </tr>
+                    <tr>
+                        <td>Output writing</td>
+                        <td>File I/O calls</td>
+                        <td>Look for: fputc, fwrite, putc</td>
+                    </tr>
+                </table>
+                
+                <h4>Testing Strategy:</h4>
+                <div class="test-method">
+                    <strong>✅ How to Verify:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>Identify operation:</strong> Is it ADD (01), XOR (31), SUB (29)?</li>
+                        <li><strong>Test manually:</strong> Take first byte + key byte, does result match?</li>
+                        <li><strong>Check for special handling:</strong> EOF check? Rewind? Padding?</li>
+                        <li><strong>Verify with source:</strong> If available, compare with .c file</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="question-type">
+                <h3>Type 4: "Decrypt/decode this"</h3>
+                <p><strong>Example:</strong> "Decrypt Settings.ini"</p>
+                
+                <h4>What to Look For:</h4>
+                <table>
+                    <tr>
+                        <th>Step</th>
+                        <th>What to Find</th>
+                        <th>How to Test</th>
+                    </tr>
+                    <tr>
+                        <td>1. Find algorithm</td>
+                        <td>Encryption operation</td>
+                        <td>From Question Type 3</td>
+                    </tr>
+                    <tr>
+                        <td>2. Find key</td>
+                        <td>Which key was used?</td>
+                        <td>Check file timestamp, from Question Type 2</td>
+                    </tr>
+                    <tr>
+                        <td>3. Determine inverse</td>
+                        <td>Reverse operation</td>
+                        <td>ADD → SUB, XOR → XOR, ROL → ROR</td>
+                    </tr>
+                    <tr>
+                        <td>4. Decrypt first byte</td>
+                        <td>Test with one byte</td>
+                        <td>Should be printable ASCII (0x20-0x7E)</td>
+                    </tr>
+                    <tr>
+                        <td>5. Decrypt all</td>
+                        <td>Full message</td>
+                        <td>Should be readable English text</td>
+                    </tr>
+                </table>
+                
+                <h4>Testing Strategy:</h4>
+                <div class="test-method">
+                    <strong>✅ How to Verify:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>First byte test:</strong> Decrypt byte 0, should be letter</li>
+                        <li><strong>ASCII range check:</strong> All bytes 32-126? (printable)</li>
+                        <li><strong>Re-encrypt test:</strong> Encrypt result, does it match original?</li>
+                        <li><strong>Sanity check:</strong> Does message make sense?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Universal Workflow -->
+            <h2>🔄 Step 3: Universal Analysis Workflow</h2>
+            
+            <div class="flowchart">┌─────────────────────────────────────┐
+│   READ QUESTION 3 TIMES             │
+│   • Identify type                   │
+│   • Extract keywords                │
+│   • Plan evidence needed            │
+└─────────────┬───────────────────────┘
+              │
+              ▼
+┌─────────────────────────────────────┐
+│   STATIC ANALYSIS (NO IDA YET!)     │
+│   • file binary                     │
+│   • strings binary | grep keyword   │
+│   • xxd encrypted_file              │
+│   • stat encrypted_file (date!)     │
+└─────────────┬───────────────────────┘
+              │
+              ▼
+┌─────────────────────────────────────┐
+│   OPEN IDA - QUICK RECON            │
+│   • Shift+F12 (strings)             │
+│   • Shift+F3 (functions)            │
+│   • Look for keywords from question │
+└─────────────┬───────────────────────┘
+              │
+              ▼
+┌─────────────────────────────────────┐
+│   FIND RELEVANT CODE                │
+│   • Double-click keyword string     │
+│   • Press X (cross-references)      │
+│   • Jump to function                │
+└─────────────┬───────────────────────┘
+              │
+              ▼
+┌─────────────────────────────────────┐
+│   ANALYZE & COLLECT EVIDENCE        │
+│   • Note opcode addresses           │
+│   • Identify function calls         │
+│   • Trace data flow                 │
+│   • Draw diagrams if needed         │
+└─────────────┬───────────────────────┘
+              │
+              ▼
+┌─────────────────────────────────────┐
+│   TEST YOUR FINDINGS                │
+│   • Manual calculation              │
+│   • Python script                   │
+│   • Verify result makes sense       │
+└─────────────┬───────────────────────┘
+              │
+              ▼
+┌─────────────────────────────────────┐
+│   WRITE ANSWER                      │
+│   • Cite specific opcodes           │
+│   • Show calculations               │
+│   • Provide evidence                │
+└─────────────────────────────────────┘</div>
+
+            <!-- Testing Checklist -->
+            <h2>✅ Step 4: Verification Checklist</h2>
+            
+            <div class="methodology">
+                <h3>Before Submitting Your Answer, Verify:</h3>
+                
+                <ul class="checklist">
+                    <li><strong>Evidence completeness:</strong> Did I cite specific addresses?</li>
+                    <li><strong>Opcode accuracy:</strong> Did I verify opcodes in IDA?</li>
+                    <li><strong>Logic consistency:</strong> Does my explanation follow code flow?</li>
+                    <li><strong>Calculation correctness:</strong> Did I test with actual values?</li>
+                    <li><strong>Range validation:</strong> Do values make sense? (0-6 for days, 0x20-0x7E for ASCII)</li>
+                    <li><strong>Cross-reference check:</strong> Did I verify with other evidence?</li>
+                    <li><strong>English readability:</strong> If decrypting, is result readable?</li>
+                    <li><strong>Question requirements:</strong> Did I answer everything asked?</li>
+                </ul>
+            </div>
+
+            <!-- Mock Test 1 Example -->
+            <h2>🎯 Step 5: Applying to Mock Test 1</h2>
+            
+            <h3>Question 1a: "How does mock_1.exe use the key files?"</h3>
+            
+            <div class="step-box">
+                <span class="step-number">1</span>
+                <strong>Question Analysis</strong>
+                <p style="margin-top: 10px;">
+                    <strong>Type:</strong> "How does it use..." → Usage pattern<br>
+                    <strong>Keywords:</strong> "key files", "key0-key7"<br>
+                    <strong>Evidence needed:</strong> String references, function calls, opcodes
+                </p>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">2</span>
+                <strong>Static Analysis First</strong>
+                <div class="code-block">$ strings mock_1.exe | grep key
+key0
+key1
+key2
+key3
+key4
+key5
+key6
+
+# FINDING: Only 7 strings! key7 is missing!</div>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">3</span>
+                <strong>IDA Analysis</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><kbd>Shift+F12</kbd> → Find "key0" string</li>
+                    <li>Double-click → Press <kbd>X</kbd> → Jump to usage</li>
+                    <li>See: <code>call _stat</code> at 0x004014CB</li>
+                    <li>Find switch/case structure with cmp eax, 6</li>
+                </ul>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">4</span>
+                <strong>Testing</strong>
+                <div class="test-method">
+                    <strong>Verification:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>✅ Counted 7 strings (key0-key6)</li>
+                        <li>✅ key7 NOT referenced in code</li>
+                        <li>✅ Found stat() call at 0x004014CB</li>
+                        <li>✅ Switch handles 0-6 (7 cases)</li>
+                        <li>✅ Logic makes sense: 7 days, 7 keys</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Question 2a: "Explain how input.txt is encrypted"</h3>
+            
+            <div class="step-box">
+                <span class="step-number">1</span>
+                <strong>Question Analysis</strong>
+                <p style="margin-top: 10px;">
+                    <strong>Type:</strong> "Explain how..." → Algorithm/process<br>
+                    <strong>Keywords:</strong> "input.txt", "encrypted"<br>
+                    <strong>Evidence needed:</strong> Loop structure, math operation, I/O calls
+                </p>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">2</span>
+                <strong>Find the Function</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><kbd>Shift+F12</kbd> → Search "Encrypting"</li>
+                    <li>Press <kbd>X</kbd> → Jump to function</li>
+                    <li>Look for loop with fgetc calls</li>
+                </ul>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">3</span>
+                <strong>Identify the Operation</strong>
+                <div class="code-block"># Look at the opcode bytes:
+0040145F    01 C2    add edx, eax
+
+# Opcode 01 = ADD (NOT 31 = XOR!)
+# This is critical for decryption!</div>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">4</span>
+                <strong>Testing</strong>
+                <div class="test-method">
+                    <strong>Manual Test:</strong>
+                    <div class="code-block">Input byte:  'T' = 84 (0x54)
+Key byte:    197 (0xC5)
+Operation:   84 + 197 = 281
+Overflow:    281 mod 256 = 25 (0x19)
+
+Verify in Settings.ini:
+$ xxd -l 1 Settings.ini
+00000000: 19    ← MATCHES! ✓</div>
+                </div>
+            </div>
+
+            <!-- Common Mistakes -->
+            <h2>⚠️ Common Mistakes & How to Avoid Them</h2>
+            
+            <table>
+                <tr>
+                    <th>Mistake</th>
+                    <th>Why It Happens</th>
+                    <th>How to Avoid</th>
+                </tr>
+                <tr>
+                    <td>Confusing ADD with XOR</td>
+                    <td>Both are common ciphers</td>
+                    <td>Check opcode bytes: 01 = ADD, 31 = XOR</td>
+                </tr>
+                <tr>
+                    <td>Wrong key file</td>
+                    <td>Didn't check file date</td>
+                    <td>Always check: stat filename | grep Modify</td>
+                </tr>
+                <tr>
+                    <td>Forgot modulo 256</td>
+                    <td>Ignored overflow</td>
+                    <td>Byte arithmetic always wraps at 256</td>
+                </tr>
+                <tr>
+                    <td>No opcode citations</td>
+                    <td>Rushed the answer</td>
+                    <td>Question says "cite" = must provide addresses</td>
+                </tr>
+                <tr>
+                    <td>Assumed key7 is used</td>
+                    <td>Didn't verify in code</td>
+                    <td>Always verify: Shift+F12 → count strings</td>
+                </tr>
+            </table>
+
+            <!-- Quick Decision Tree -->
+            <h2>🌳 Quick Decision Tree: "What Should I Do?"</h2>
+            
+            <div class="flowchart">START: Read the question
+    ↓
+Does it mention a FILE NAME?
+    ├─ YES → Shift+F12 (strings), search filename
+    └─ NO  → Continue ↓
+    
+Does it ask "HOW" something works?
+    ├─ YES → Find function, analyze algorithm
+    └─ NO  → Continue ↓
+    
+Does it ask "WHAT" determines something?
+    ├─ YES → Look for CMP, conditional jumps, switches
+    └─ NO  → Continue ↓
+    
+Does it ask to DECRYPT/DECODE?
+    ├─ YES → Find algorithm → Find key → Apply inverse
+    └─ NO  → Continue ↓
+    
+Is it asking for KNOWLEDGE (memory forensics)?
+    ├─ YES → Use your study notes, no IDA needed
+    └─ NO  → Re-read question!</div>
+
+            <!-- Time Management -->
+            <h2>⏰ Time Management Strategy (2-hour exam)</h2>
+            
+            <table>
+                <tr>
+                    <th>Phase</th>
+                    <th>Time</th>
+                    <th>What to Do</th>
+                </tr>
+                <tr>
+                    <td><strong>Read All Questions</strong></td>
+                    <td>5 min</td>
+                    <td>Skim all questions, identify easy ones</td>
+                </tr>
+                <tr>
+                    <td><strong>Static Analysis</strong></td>
+                    <td>10 min</td>
+                    <td>file, strings, xxd, stat (before IDA!)</td>
+                </tr>
+                <tr>
+                    <td><strong>IDA Setup</strong></td>
+                    <td>5 min</td>
+                    <td>Load binary, wait for analysis, Shift+F12</td>
+                </tr>
+                <tr>
+                    <td><strong>Question 1 (Easy)</strong></td>
+                    <td>20 min</td>
+                    <td>String finding, cross-references</td>
+                </tr>
+                <tr>
+                    <td><strong>Question 2 (Medium)</strong></td>
+                    <td>25 min</td>
+                    <td>Algorithm analysis, opcodes</td>
+                </tr>
+                <tr>
+                    <td><strong>Question 3 (Hard)</strong></td>
+                    <td>30 min</td>
+                    <td>Decryption, calculation, verification</td>
+                </tr>
+                <tr>
+                    <td><strong>Question 4 (Knowledge)</strong></td>
+                    <td>15 min</td>
+                    <td>Write from memory, no IDA</td>
+                </tr>
+                <tr>
+                    <td><strong>Review & Verify</strong></td>
+                    <td>10 min</td>
+                    <td>Check all answers, verify calculations</td>
+                </tr>
+            </table>
+
+            <!-- Final Tips -->
+            <h2>💡 Final Pro Tips</h2>
+            
+            <div class="tip">
+                <h3>1. Always Start with Static Analysis</h3>
+                <p>Before opening IDA, use command-line tools:</p>
+                <div class="code-block"># These are FAST and give you context
+file binary
+strings binary | grep -i keyword
+xxd encrypted_file | head
+stat encrypted_file</div>
+            </div>
+            
+            <div class="tip">
+                <h3>2. Use the Question Keywords as Search Terms</h3>
+                <p>If question mentions "key files", search for "key" in strings!</p>
+            </div>
+            
+            <div class="tip">
+                <h3>3. Verify with Multiple Methods</h3>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Logical:</strong> Does it make sense? (7 days → 7 keys)</li>
+                    <li><strong>Mathematical:</strong> Calculate manually</li>
+                    <li><strong>Practical:</strong> Test with Python</li>
+                    <li><strong>Cross-check:</strong> Compare with source code (if available)</li>
+                </ul>
+            </div>
+            
+            <div class="tip">
+                <h3>4. Draw Diagrams</h3>
+                <p>For complex logic, sketch it out:</p>
+                <div class="code-block">time() → localtime() → [struct tm+0x18] → tm_wday → 0-6 → key0-key6</div>
+            </div>
+            
+            <div class="tip">
+                <h3>5. When Stuck, Ask:</h3>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>"What function would do this?" (time? rand? input?)</li>
+                    <li>"What's the range of values?" (0-6? 0-255? 0-9?)</li>
+                    <li>"Does this result make sense?" (Is 'T' a reasonable first letter?)</li>
+                    <li>"What would happen if I encrypt my answer back?" (Should match original)</li>
+                </ul>
+            </div>
+
+            <!-- Practice Exercise -->
+            <h2>🏋️ Practice Exercise: Apply the Methodology</h2>
+            
+            <div class="question-type">
+                <h3>Try This Yourself:</h3>
+                <p><strong>Question:</strong> "Given that Settings.ini was created on Tuesday, which key file would be used?"</p>
+                
+                <h4>Step-by-Step Solution:</h4>
+                
+                <div class="step-box">
+                    <span class="step-number">1</span>
+                    <strong>Question Type:</strong> "Which" → Selection/criterion
+                </div>
+                
+                <div class="step-box">
+                    <span class="step-number">2</span>
+                    <strong>Keywords:</strong> "Tuesday", "which key"
+                </div>
+                
+                <div class="step-box">
+                    <span class="step-number">3</span>
+                    <strong>What We Know:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>From Question 1b: Selection based on tm_wday</li>
+                        <li>tm_wday values: 0=Sun, 1=Mon, 2=Tue, ...</li>
+                        <li>Tuesday = 2</li>
+                    </ul>
+                </div>
+                
+                <div class="step-box">
+                    <span class="step-number">4</span>
+                    <strong>Answer:</strong> <span class="highlight">key2</span>
+                </div>
+                
+                <div class="test-method">
+                    <strong>Verification:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>✅ Tuesday = tm_wday value 2</li>
+                        <li>✅ Day 2 maps to key2</li>
+                        <li>✅ Consistent with switch-case structure</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px; padding: 30px; background: #f8f9fa; border-radius: 8px;">
+                <h2 style="color: #28a745;">🎓 You Now Have a Systematic Approach!</h2>
+                <p style="font-size: 1.1em; margin-top: 15px;">
+                    Use this methodology for EVERY reverse engineering question.<br>
+                    <strong>Read → Analyze → Find → Verify → Answer</strong>
+                </p>
+                <p style="margin-top: 15px;">
+                    <a href="index.html" style="color: #667eea; text-decoration: none; font-weight: bold;">← Back to Main Tutorial</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
